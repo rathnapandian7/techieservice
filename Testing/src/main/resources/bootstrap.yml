@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: testing
+  cloud:
+    config:
+      uri: http://localhost:1000

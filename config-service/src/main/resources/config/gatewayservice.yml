@@ -1,0 +1,50 @@
+server:
+  port: 1005
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1001/eureka/
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      globalcors:
+      corsConfigurations:
+      '[/**]':
+      allowedOrigins: "*"
+      allowedMethods:
+        - GET,PUT,POST,OPTIONS,DELETE
+      routes:
+        - id: authservice
+          uri: http://localhost:1003
+          predicates:
+            - Path=/api/authservice/**
+          filters:
+            - RewritePath=/api/authservice/(?<segment>.*), /authservice/$\{segment}
+        - id: customer-service
+          uri: http://localhost:1004
+          predicates:
+            - Path=/api/customer-service/**
+          filters:
+            - RewritePath=/api/customer-service/(?<segment>.*), /customer-service/$\{segment}
+        - id: insurancecompanyservice
+          uri: http://localhost:9065
+          predicates:
+            - Path=/api/insurancecompanyservice/**
+          filters:
+            - RewritePath=/api/insurancecompanyservice/(?<segment>.*), /insurancecompanyservice/$\{segment}     
+            
+management:
+  endpoints:
+    web.exposure.include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+jackson:
+  serialization:
+    WRITE_DATES_AS_TIMESTAMPS: false
+    

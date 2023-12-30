@@ -1,0 +1,52 @@
+server:
+  port: 1003
+  servlet:
+    context-path: /authservice
+
+source:
+  ida: rats
+security:
+  oauth2:
+    resource:
+      filter-order: 3
+  headers:
+    frame: false
+  oauth2-server:
+    user-id: techie
+    password: gY3dRTLukVd+aEnkdw5aH3FxheExV9NnqjeOS9gbF9MHMcVW9YxiYA0VqjoIMe+vMXRcYBXSjuEYu4XapL/BLqM5wb68QhFJUKgBhOaqJ24=
+  oauth2-server-url: http://localhost:1003/oauth/token
+  #  //refresh-token-url: http://localhost:9003/api/auth-service/oauth/check_token?
+  signing-key: MaYzkSjmkzPC57L
+  encoding-strength: 256
+  jwt:
+    grant-type-password: password
+    grant-type-refresh_token: refresh_token
+    scope-read: read
+    scope-write: write
+    resource-ids: resource_id
+    access:
+      token:
+        validity: 100000
+    refresh:
+      token:
+        validity: 150000
+
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/demo_test
+    username: root
+    password: root
+  jpa:
+    hibernate.ddl-auto: update
+    generate-ddl: true
+    show-sql: true
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.H2Dialect
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1001/eureka/
+
